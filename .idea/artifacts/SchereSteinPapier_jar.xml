@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SchereSteinPapier:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SchereSteinPapier_jar</output-path>
+    <root id="archive" name="SchereSteinPapier.jar">
+      <element id="module-output" name="SchereSteinPapier" />
+    </root>
+  </artifact>
+</component>
