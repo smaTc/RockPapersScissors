@@ -25,9 +25,9 @@ public class Game {
     }
 
     public void setRules(){
-        rules.add(new Rule("Rock","Scissors"));
-        rules.add(new Rule("Papers","Rock"));
-        rules.add(new Rule("Scissors","Papers"));
+        rules.add(new Rule(Picks.Rock,Picks.Scissors));
+        rules.add(new Rule(Picks.Papers,Picks.Rock));
+        rules.add(new Rule(Picks.Scissors,Picks.Papers));
     }
 
     private void playGame(){
@@ -49,9 +49,9 @@ public class Game {
     }
 
     private void getWinner(int player,int computer){
-        String pick1_ = toItem(player);
+        Picks pick1_ = toItem(player);
         System.out.println("You chose: "+pick1_);
-        String pick2_ = toItem(computer);
+        Picks pick2_ = toItem(computer);
         System.out.println("Computer chose: "+pick2_);
         int winner=checkRules(pick1_,pick2_);
         if(winner==1){
@@ -68,18 +68,11 @@ public class Game {
         }
     }
 
-    private int checkRules(String player,String computer){
+    private int checkRules(Picks player,Picks computer){
         if(player.equals(computer))return 0;
-        /*
-        else if(pick1.equals("Rock") && pick2.equals("Papers")) return 2;
-        else if(pick2.equals("Rock") && pick1.equals("Papers")) return 1;
-        else if(pick1.equals("Rock") && pick2.equals("Scissors")) return 1;
-        else if(pick2.equals("Rock") && pick1.equals("Scissors")) return 2;
-        else if(pick1.equals("Papers") && pick2.equals("Scissors")) return 2;
-        else if(pick2.equals("Papers") && pick1.equals("Scissors")) return 1;*/
-        String winner = "";
+        Picks winner = null;
         for(int i=0;i<rules.size();i++){
-            if(!rules.get(i).getWinner(player,computer).equals("")){
+            if(rules.get(i).getWinner(player,computer) != null){
                 winner = rules.get(i).getWinner(player,computer);
             }
         }
@@ -91,17 +84,17 @@ public class Game {
 
 
 
-    private String toItem(int pick){
+    private Picks toItem(int pick){
         if(pick == 1){
-            return "Rock";
+            return Picks.Rock;
         }
         else if(pick == 2){
-            return "Papers";
+            return Picks.Papers;
         }
         else if(pick == 3){
-            return "Scissors";
+            return Picks.Scissors;
         }
-        else return "Error";
+       else return null;
     }
 
     private String readInput(){

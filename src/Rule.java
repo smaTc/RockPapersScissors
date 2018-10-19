@@ -1,15 +1,15 @@
 public class Rule {
-    private String winner;
-    private String loser;
-    public Rule(String winner, String loser){
+    private Picks winner;
+    private Picks loser;
+    public Rule(Picks winner, Picks loser){
         this.winner = winner;
         this.loser = loser;
     }
 
-    String getWinner(String obj1, String obj2){
-        if( (obj1.equals(winner) && obj2.equals(loser)) ||(obj1.equals(loser) && obj2.equals(winner))){
+    Picks getWinner(Picks obj1, Picks obj2){
+        if( (obj1==this.winner && obj2==this.loser) ||(obj1==this.loser && obj2==this.winner)){
             return this.winner;
         }
-        else return "";
+        else return null;
     }
 }
