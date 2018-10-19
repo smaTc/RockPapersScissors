@@ -9,10 +9,12 @@ public class Game {
     private Random rand;
     private ArrayList<Rule> rules = new ArrayList<>();
     private boolean started=false;
+    private Picks[] picks;
 
 
     public void startGame(){
         setRules();
+       this.picks = Picks.getPicks();
         rand = new Random();
         System.out.println("What is your name?");
         this.player = readInput();
@@ -28,18 +30,25 @@ public class Game {
         rules.add(new Rule(Picks.Rock,Picks.Scissors));
         rules.add(new Rule(Picks.Papers,Picks.Rock));
         rules.add(new Rule(Picks.Scissors,Picks.Papers));
+        rules.add(new Rule(Picks.Rock,Picks.Lizard));
+        rules.add(new Rule(Picks.Lizard,Picks.Spock));
+        rules.add(new Rule(Picks.Spock,Picks.Scissors));
+        rules.add(new Rule(Picks.Scissors,Picks.Lizard));
+        rules.add(new Rule(Picks.Lizard,Picks.Papers));
+        rules.add(new Rule(Picks.Papers,Picks.Spock));
+        rules.add(new Rule(Picks.Spock,Picks.Rock));
     }
 
     private void playGame(){
         System.out.println("Choose a number:");
-        System.out.println("1. Rock");
-        System.out.println("2. Papers");
-        System.out.println("3. Scissors");
-        System.out.println("Your pick: ");
+        for(int i=0;i<picks.length;i++){
+            //String pick = picks[i].toString().split(".")[1];
+            String pick = picks[i].toString();
+            System.out.println((i+1)+". " + pick);
+        }
         int playerPick=Integer.parseInt(readInput());
-        int computerPick = rand.nextInt(3)+1;
+        int computerPick = rand.nextInt(picks.length)+1;
         getWinner(playerPick,computerPick);
-        //System.out.println("Play another round?");
         System.out.println("\n");
         System.out.println("Press Enter for another game or type \"exit\" to exit the Game.");
         String action = readInput();
@@ -82,19 +91,9 @@ public class Game {
         else return -1;
     }
 
-
-
     private Picks toItem(int pick){
-        if(pick == 1){
-            return Picks.Rock;
-        }
-        else if(pick == 2){
-            return Picks.Papers;
-        }
-        else if(pick == 3){
-            return Picks.Scissors;
-        }
-       else return null;
+        if(pick>0) return this.picks[pick-1];
+        else return null;
     }
 
     private String readInput(){
@@ -110,9 +109,12 @@ public class Game {
             readInput();
         }
         if(input.equals("exit"))System.exit(0);
-        if(started && !(input.equals("1") || input.equals("2") || input.equals("3") || input.equals(""))){
-            System.out.println("Wrong input...try again.");
-            readInput();
+        if(started){
+            if(!input.equals("") && Integer.parseInt(input)>picks.length ){
+                System.out.println("Wrong input...try again.");
+                readInput();
+            }
+
         }
         return input;
     }
